@@ -45,28 +45,16 @@ exports.signup = async (req, res) => {
       coordinateY,
     } = req.body;
 
-    let user;
-    if (role === "rider") {
-      user = await User.create({
-        firstname,
-        lastname,
-        email,
-        password,
-        confirmPassword,
-        role,
-      });
-    } else {
-      user = await User.create({
-        firstname,
-        lastname,
-        email,
-        password,
-        confirmPassword,
-        role,
-        coordinateX,
-        coordinateY,
-      });
-    }
+    const user = await User.create({
+      firstname,
+      lastname,
+      email,
+      password,
+      confirmPassword,
+      role,
+      coordinateX,
+      coordinateY,
+    });
 
     if (!user) {
       let err = new Error("signup failed");
@@ -121,5 +109,19 @@ exports.signout = async (req, res, next) => {
   } catch (err) {
     err.statusCode = 400;
     return next(err);
+  }
+};
+
+// updateme
+
+exports.updateLocation = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      coordinateX: req.body.x,
+      coordinateY: req.body.y,
+    });
+    sendToken(user, 200, res);
+  } catch (err) {
+    res.status(400).json({ status: "fail", message: err.message });
   }
 };

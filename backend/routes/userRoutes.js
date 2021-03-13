@@ -7,5 +7,6 @@ router.post("/signup", authController.signup);
 router.post("/signin", authController.signin);
 router.get("/signout", authController.signout);
 router.post("/findride", rideController.findRide);
+router.patch("/updatelocation/:id", authController.updateLocation);
 
 module.exports = router;

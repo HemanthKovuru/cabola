@@ -10,6 +10,7 @@ const Navbar = ({
   bookacabPopup,
   handlenotifications,
   handleHistory,
+  cancelRide,
 }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   return (
@@ -49,7 +50,7 @@ const Navbar = ({
                   <Link to='/history'>history</Link>
                 </span>
               )}
-              <span onClick={getImages} className='btn btn-signin'>
+              <span className='btn btn-signin'>
                 <Link to='/profile'>profile</Link>
               </span>
               <span onClick={signout} className='btn btn-signup'>

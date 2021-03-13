@@ -22,8 +22,7 @@ const Home = () => {
   const [y, setY] = useState(0);
   const [role, setRole] = useState();
   const [cab, setCab] = useState();
-  const [reqRide, setReqRide] = useState(false);
-  const [notification, setNotification] = useState();
+  const [status, setStatus] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("user"));
   const driver = JSON.parse(localStorage.getItem("driver"));
@@ -65,7 +64,7 @@ const Home = () => {
       }
       alert("signup successful..!");
     } catch (err) {
-      alert(err.response.data.message);
+      // alert(err.response.data.message);
       console.log(err.response);
     }
   };
@@ -122,7 +121,7 @@ const Home = () => {
     setCab(!cab);
   };
 
-  // findcabs
+  // create a ride
   const creaRide = async () => {
     try {
       const res = await axios.post("http://localhost:4000/api/v1/rides", {
@@ -130,14 +129,16 @@ const Home = () => {
         driverId: driver.id,
       });
       if (res.data.status === "success") {
-        const btn = document.querySelector(".btnd");
-        btn.disabled = true;
+        setStatus(true);
+        alert("wait for driver to respond or try again!");
       }
     } catch (err) {
       alert(err);
       console.log(err.response);
     }
   };
+
+  // find cabs near location
   const findCab = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -147,8 +148,8 @@ const Home = () => {
       const { data } = await axios.post(
         "http://localhost:4000/api/v1/rides/findride",
         {
-          coordinateX: 3,
-          coordinateY: 8,
+          coordinateX: x,
+          coordinateY: y,
         }
       );
       localStorage.setItem("driver", JSON.stringify(data.driver));
@@ -180,11 +181,9 @@ const Home = () => {
     try {
       localStorage.removeItem("driver");
       const ride = await axios.delete("http://localhost:4000/api/v1/rides");
-      console.log(ride);
       if (ride.data.status === "success") {
         window.location.replace("/");
         localStorage.removeItem("driver");
-        document.querySelector(".btnd").getAttribute("disabled");
       }
     } catch (err) {
       alert(err);
@@ -242,7 +241,7 @@ const Home = () => {
         <div>
           <div>name: {driver.fisrtname}</div>
           <div>Phone: {driver.email}</div>
-          <button disabled={false} className='btnd' onClick={creaRide}>
+          <button disabled={status} onClick={creaRide}>
             request a ride
           </button>
           <button onClick={cancelRide}>cancel</button>
@@ -260,14 +259,14 @@ const Home = () => {
 
               <form onSubmit={findCab} className='form__signup'>
                 <input
-                  onChange={(evt) => setEmail(evt.target.value)}
+                  onChange={(evt) => setX(evt.target.value)}
                   className='form__input custom__input'
                   type='number'
                   placeholder='Enter x-coordinate'
                   required
                 />
                 <input
-                  onChange={(evt) => setPassword(evt.target.value)}
+                  onChange={(evt) => setY(evt.target.value)}
                   className='form__input custom__input'
                   type='number'
                   placeholder='Enter y-coordinate'
