@@ -5,7 +5,7 @@ dotenv.config({ path: "./config.env" });
 const app = require("./app");
 
 // database connection
-const db = process.env.DATABASE.replace("<password>", process.env.DB_PASSWORD);
+const db = process.env.DATABASE.replace("<PASSWORD>", process.env.DB_PASSWORD);
 mongoose
   .connect(db, {
     useUnifiedTopology: true,
