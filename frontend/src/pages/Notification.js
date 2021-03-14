@@ -8,9 +8,7 @@ const Notification = () => {
   const acceptRide = async () => {
     try {
       localStorage.removeItem("driver");
-      const ride = await axios.patch(
-        `http://localhost:4000/api/v1/rides/${notification._id}`
-      );
+      const ride = await axios.patch(`/api/v1/rides/${notification._id}`);
       console.log(ride);
       if (ride.data.status === "success") {
         window.location.replace("/");
@@ -25,7 +23,7 @@ const Notification = () => {
   const cancelRide = async () => {
     try {
       localStorage.removeItem("driver");
-      const ride = await axios.delete("http://localhost:4000/api/v1/rides");
+      const ride = await axios.delete("/api/v1/rides");
       console.log(ride);
       if (ride.data.status === "success") {
         window.location.replace("/");

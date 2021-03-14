@@ -190,7 +190,7 @@ const Home = () => {
   const handlenotifications = async () => {
     try {
       const notification = await axios.get(
-        `http://localhost:4000/api/v1/rides/${user.data.user._id}`
+        `/api/v1/rides/${user.data.user._id}`
       );
       console.log(notification);
       if (notification.data.status === "success") {
@@ -209,7 +209,7 @@ const Home = () => {
   const handleHistory = async () => {
     try {
       const history = await axios.get(
-        `http://localhost:4000/api/v1/rides/history/${user.data.user._id}`
+        `/api/v1/rides/history/${user.data.user._id}`
       );
       if (history.data.status === "success") {
         console.log(history);

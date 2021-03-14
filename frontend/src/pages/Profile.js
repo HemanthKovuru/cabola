@@ -13,7 +13,7 @@ const Profile = () => {
     try {
       setCab(true);
       const { data } = await axios.patch(
-        `http://localhost:4000/api/v1/users/updatelocation/${user.data.user._id}`,
+        `/api/v1/users/updatelocation/${user.data.user._id}`,
         {
           x,
           y,
