@@ -64,7 +64,7 @@ const Home = () => {
       }
       alert("signup successful..!");
     } catch (err) {
-      // alert(err.response.data.message);
+      alert(err.response.data.message);
       console.log(err.response);
     }
   };
@@ -73,16 +73,10 @@ const Home = () => {
   const handleSignin = async (evt) => {
     evt.preventDefault();
     try {
-      const { data } = await axios.post(
-        "/api/v1/users/signin",
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+      const { data } = await axios.post("/api/v1/users/signin", {
+        email,
+        password,
+      });
       console.log(data);
 
       localStorage.setItem("user", JSON.stringify(data));
