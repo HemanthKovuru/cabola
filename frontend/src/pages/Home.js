@@ -42,7 +42,7 @@ const Home = () => {
     evt.preventDefault();
     try {
       let data = await axios.post(
-        "http://localhost:4000/api/v1/users/signup",
+        "/api/v1/users/signup",
         {
           firstname,
           lastname,
@@ -74,7 +74,7 @@ const Home = () => {
     evt.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/users/signin",
+        "/api/v1/users/signin",
         {
           email,
           password,
@@ -99,9 +99,7 @@ const Home = () => {
   // signout
   const handleSignOut = async () => {
     try {
-      const { data } = await axios.get(
-        "http://localhost:4000/api/v1/users/signout"
-      );
+      const { data } = await axios.get("/api/v1/users/signout");
       console.log(data);
 
       if (data.status === "success") {
@@ -124,7 +122,7 @@ const Home = () => {
   // create a ride
   const creaRide = async () => {
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/rides", {
+      const res = await axios.post("/api/v1/rides", {
         userId: user.data.user._id,
         driverId: driver.id,
       });
@@ -145,13 +143,10 @@ const Home = () => {
       alert("please login to continue");
     }
     try {
-      const { data } = await axios.post(
-        "http://localhost:4000/api/v1/rides/findride",
-        {
-          coordinateX: x,
-          coordinateY: y,
-        }
-      );
+      const { data } = await axios.post("/api/v1/rides/findride", {
+        coordinateX: x,
+        coordinateY: y,
+      });
       localStorage.setItem("driver", JSON.stringify(data.driver));
       // creaRide(user.data.user.id, data.driver.id);
 
@@ -180,7 +175,7 @@ const Home = () => {
   const cancelRide = async () => {
     try {
       localStorage.removeItem("driver");
-      const ride = await axios.delete("http://localhost:4000/api/v1/rides");
+      const ride = await axios.delete("/api/v1/rides");
       if (ride.data.status === "success") {
         window.location.replace("/");
         localStorage.removeItem("driver");
