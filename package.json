@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.6",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.19",
+    "mongoose": "^5.11.15",
     "morgan": "^1.10.0",
     "validator": "^13.5.2"
   }
