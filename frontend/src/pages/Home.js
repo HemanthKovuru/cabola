@@ -42,7 +42,7 @@ const Home = () => {
     evt.preventDefault();
     try {
       let data = await axios.post(
-        "/api/v1/users/signup",
+        "http://localhost:4000/api/v1/users/signup",
         {
           firstname,
           lastname,
@@ -64,7 +64,7 @@ const Home = () => {
       }
       alert("signup successful..!");
     } catch (err) {
-      alert(err.response.data.message);
+      // alert(err.response.data.message);
       console.log(err.response);
     }
   };
@@ -73,10 +73,16 @@ const Home = () => {
   const handleSignin = async (evt) => {
     evt.preventDefault();
     try {
-      const { data } = await axios.post("/api/v1/users/signin", {
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        "http://localhost:4000/api/v1/users/signin",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(data);
 
       localStorage.setItem("user", JSON.stringify(data));
@@ -93,7 +99,9 @@ const Home = () => {
   // signout
   const handleSignOut = async () => {
     try {
-      const { data } = await axios.get("/api/v1/users/signout");
+      const { data } = await axios.get(
+        "http://localhost:4000/api/v1/users/signout"
+      );
       console.log(data);
 
       if (data.status === "success") {
@@ -116,7 +124,7 @@ const Home = () => {
   // create a ride
   const creaRide = async () => {
     try {
-      const res = await axios.post("/api/v1/rides", {
+      const res = await axios.post("http://localhost:4000/api/v1/rides", {
         userId: user.data.user._id,
         driverId: driver.id,
       });
@@ -137,10 +145,13 @@ const Home = () => {
       alert("please login to continue");
     }
     try {
-      const { data } = await axios.post("/api/v1/rides/findride", {
-        coordinateX: x,
-        coordinateY: y,
-      });
+      const { data } = await axios.post(
+        "http://localhost:4000/api/v1/rides/findride",
+        {
+          coordinateX: x,
+          coordinateY: y,
+        }
+      );
       localStorage.setItem("driver", JSON.stringify(data.driver));
       // creaRide(user.data.user.id, data.driver.id);
 
@@ -169,7 +180,7 @@ const Home = () => {
   const cancelRide = async () => {
     try {
       localStorage.removeItem("driver");
-      const ride = await axios.delete("/api/v1/rides");
+      const ride = await axios.delete("http://localhost:4000/api/v1/rides");
       if (ride.data.status === "success") {
         window.location.replace("/");
         localStorage.removeItem("driver");
@@ -184,7 +195,7 @@ const Home = () => {
   const handlenotifications = async () => {
     try {
       const notification = await axios.get(
-        `/api/v1/rides/${user.data.user._id}`
+        `http://localhost:4000/api/v1/rides/${user.data.user._id}`
       );
       console.log(notification);
       if (notification.data.status === "success") {
@@ -203,7 +214,7 @@ const Home = () => {
   const handleHistory = async () => {
     try {
       const history = await axios.get(
-        `/api/v1/rides/history/${user.data.user._id}`
+        `http://localhost:4000/api/v1/rides/history/${user.data.user._id}`
       );
       if (history.data.status === "success") {
         console.log(history);
