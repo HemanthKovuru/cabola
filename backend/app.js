@@ -7,7 +7,7 @@ const userRouter = require("./routes/userRoutes");
 const rideRouter = require("./routes/rideRoutes");
 
 // middlewares
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ credentials: true }));
 
 // morgan
 if (process.env.NODE_ENV === "development") {
